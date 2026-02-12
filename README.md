@@ -1,5 +1,11 @@
 # SecureBankKit
 
+[![Swift Package Index](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FDeepakPal25%2FSecureBankKit%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/DeepakPal25/SecureBankKit)
+[![Swift Package Index](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FDeepakPal25%2FSecureBankKit%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/DeepakPal25/SecureBankKit)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/DeepakPal25/SecureBankKit/blob/main/LICENSE)
+[![Swift](https://img.shields.io/badge/Swift-6.2-orange.svg)](https://swift.org)
+[![Platform](https://img.shields.io/badge/Platform-iOS%2015%2B-blue.svg)](https://developer.apple.com/ios/)
+
 A reusable Swift Package security toolkit for banking-style iOS apps.
 
 ## Features
@@ -31,7 +37,7 @@ Add SecureBankKit to your project using Swift Package Manager.
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/your-org/SecureBankKit.git", from: "1.0.0")
+    .package(url: "https://github.com/DeepakPal25/SecureBankKit.git", from: "1.0.0")
 ]
 ```
 
@@ -136,6 +142,20 @@ SecureLogger.error("Authentication failed")
 
 let masked = SecureLogger.redact("4111111111111111") // "************1111"
 ```
+
+## Demo App
+
+A full SwiftUI demo app is included in the [`DemoApp/`](DemoApp/) directory. It showcases every component with a clean UI.
+
+**To run it:**
+1. Open `DemoApp/SecureBankKitDemo.xcodeproj` in Xcode
+2. Select an iOS Simulator
+3. Build & Run
+
+## Blog Post
+
+Read the full blog post explaining the security pain points SecureBankKit solves:
+[**Why Every Banking iOS App Needs a Security Toolkit**](docs/BLOG.md)
 
 ## Architecture
 
