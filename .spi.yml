@@ -1,0 +1,10 @@
+version: 1
+builder:
+  configs:
+    - documentation_targets: [SecureBankKit]
+      swift_version: "6.2"
+      platform: ios
+    - swift_version: "6.0"
+      platform: ios
+    - swift_version: "5.10"
+      platform: ios
