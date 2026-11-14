@@ -15,6 +15,10 @@ A reusable Swift Package security toolkit for banking-style iOS apps.
 - **Session Management** — Inactivity timeout and token expiry tracking with auto-refresh
 - **App Lock** — Automatic lock on background with biometric re-authentication
 - **Jailbreak Detection** — Multiple heuristic checks for compromised devices
+- **Anti-Tamper Detection** — Debugger and dynamic-library injection detection
+- **Screen Capture Protection** — Screen recording / mirroring and screenshot monitoring
+- **Certificate Pinning** — Public-key / certificate pinning to defeat MITM attacks
+- **Pasteboard Protection** — Auto-expiring, local-only clipboard for sensitive values
 - **Secure Logging** — Debug-only logging with sensitive data redaction
 
 ## Requirements
@@ -133,6 +137,55 @@ if JailbreakDetector.isJailbroken() {
 }
 ```
 
+### Anti-Tamper Detection
+
+```swift
+if AntiTamperDetector.isTampered() {
+    // A debugger is attached or libraries were injected — refuse sensitive flows
+}
+
+// In release builds, terminate the app if a debugger attaches:
+#if !DEBUG
+AntiTamperDetector.denyDebuggerAttachment()
+#endif
+```
+
+### Screen Capture Protection
+
+```swift
+let protector = ScreenCaptureProtector()
+protector.onCaptureStatusChanged = { isCaptured in
+    // Hide sensitive content while the screen is recorded or mirrored
+}
+protector.onScreenshotTaken = {
+    // Log or warn that a screenshot was captured
+}
+protector.startMonitoring()
+```
+
+### Certificate Pinning
+
+```swift
+// Generate a public-key pin:
+//   openssl x509 -in cert.pem -pubkey -noout \
+//     | openssl pkey -pubin -outform der \
+//     | openssl dgst -sha256 -binary | base64
+
+let pinner = CertificatePinner(pinnedHashes: ["base64-sha256-of-spki"])
+let session = pinner.makeSession()
+let (data, response) = try await session.data(from: url)
+```
+
+### Pasteboard Protection
+
+```swift
+// Local-only copy that auto-expires after 30 seconds
+PasteboardProtector.copySensitive("4111 1111 1111 1111", expiresAfter: 30)
+
+// Clear immediately (e.g. on logout)
+PasteboardProtector.clear()
+```
+
 ### Secure Logging
 
 ```swift
@@ -165,7 +218,8 @@ Sources/SecureBankKit/
 ├── Biometrics/     → Face ID / Touch ID
 ├── Keychain/       → Keychain CRUD + Token Storage
 ├── Session/        → Session lifecycle + Token expiry
-├── Security/       → App lock + Jailbreak detection
+├── Security/       → App lock + Jailbreak/Anti-tamper + Screen capture + Pasteboard
+├── Networking/     → Certificate pinning
 └── Utils/          → Debug logging
 ```
 

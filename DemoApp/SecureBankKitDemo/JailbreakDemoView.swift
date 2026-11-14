@@ -35,7 +35,7 @@ struct JailbreakDemoView: View {
             Section("What It Checks") {
                 Label("Suspicious file paths (Cydia, sshd, etc.)", systemImage: "folder.badge.questionmark")
                 Label("Writable system directories", systemImage: "pencil.and.outline")
-                Label("Cydia URL scheme", systemImage: "link")
+                Label("Jailbreak package managers (Cydia, Sileo, Zebra)", systemImage: "app.badge")
                 Label("Suspicious dyld images", systemImage: "cpu")
             }
 

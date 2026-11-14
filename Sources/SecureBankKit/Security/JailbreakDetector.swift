@@ -21,7 +21,7 @@ public enum JailbreakDetector {
         #else
         return checkSuspiciousFiles()
             || checkWritableSystemPaths()
-            || checkCydiaURLScheme()
+            || checkJailbreakApps()
             || checkDyldImages()
         #endif
     }
@@ -54,14 +54,20 @@ public enum JailbreakDetector {
         }
     }
 
-    /// Checks whether the Cydia URL scheme can be opened.
-    private static func checkCydiaURLScheme() -> Bool {
-        guard let url = URL(string: "cydia://package/com.example.package") else {
-            return false
-        }
-        // UIApplication.shared is not available in extensions;
-        // fallback to file-based check only.
-        return FileManager.default.fileExists(atPath: url.path)
+    /// Checks for the presence of known jailbreak package manager apps.
+    ///
+    /// Uses file-based detection so it remains safe to call from app extensions
+    /// (which cannot access `UIApplication.shared` to probe URL schemes).
+    private static func checkJailbreakApps() -> Bool {
+        let paths = [
+            "/Applications/Sileo.app",
+            "/Applications/Zebra.app",
+            "/Applications/Cydia.app",
+            "/Applications/blackra1n.app",
+            "/Applications/FakeCarrier.app",
+            "/Applications/Icy.app",
+        ]
+        return paths.contains { FileManager.default.fileExists(atPath: $0) }
     }
 
     /// Scans loaded dyld images for known jailbreak libraries.

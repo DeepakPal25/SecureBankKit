@@ -47,6 +47,30 @@ struct ContentView: View {
                     }
 
                     NavigationLink {
+                        AntiTamperDemoView()
+                    } label: {
+                        Label("Anti-Tamper", systemImage: "ladybug.fill")
+                    }
+
+                    NavigationLink {
+                        ScreenCaptureDemoView()
+                    } label: {
+                        Label("Screen Capture", systemImage: "record.circle")
+                    }
+
+                    NavigationLink {
+                        CertificatePinningDemoView()
+                    } label: {
+                        Label("Certificate Pinning", systemImage: "lock.laptopcomputer")
+                    }
+
+                    NavigationLink {
+                        PasteboardDemoView()
+                    } label: {
+                        Label("Pasteboard", systemImage: "doc.on.clipboard")
+                    }
+
+                    NavigationLink {
                         LoggerDemoView()
                     } label: {
                         Label("Secure Logger", systemImage: "doc.text.magnifyingglass")
